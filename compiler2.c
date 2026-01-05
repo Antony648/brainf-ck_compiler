@@ -21,7 +21,7 @@ struct jmp_table_entry
 int get_ops_len(char* inp_str)
 {
 
-	int count;
+	int count=0;
 	int balance=0;
 	for(int i=0;inp_str[i];i++)
 	{
@@ -103,7 +103,7 @@ void set_jmp_table(struct jmp_table_entry* jmp_table, enum ops* inp_str,int loop
 int write_code(int asm_file,enum ops* inp_str,struct jmp_table_entry* jmp_table)
 {
 	ssize_t  bytes_written;
-	char* basic[]={"global _start\n","section .data\n","section .bss\n","\ttape resb 3000\n","section .text\n","_start:\n","\tlea rbx,[tape]\n"};
+	char* basic[]={"global _start\n","section .data\n","section .bss\n","\ttape resb 30000\n","section .text\n","_start:\n","\tlea rbx,[tape]\n"};
 	for(int i=0;i<7;i++)
 	{
 		bytes_written=write(asm_file,basic[i],strlen(basic[i]));
@@ -164,15 +164,15 @@ int write_code(int asm_file,enum ops* inp_str,struct jmp_table_entry* jmp_table)
 				{
 					if(i==1)
 					{
-						char a[2];
+						char a[12];
 						sprintf(a,"%d",jmp_table[jmp_table_index].self);
-						write(asm_file,a,1);
+						write(asm_file,a,strlen(a));
 					}
 					if(i==4)
 					{
-						char a[2];
+						char a[12];
 						sprintf(a,"%d",jmp_table[jmp_table_index].referal);
-						write(asm_file,a,1);
+						write(asm_file,a,strlen(a));
 					}
 					bytes_written=write(asm_file,open_loop[i],strlen(open_loop[i]));
 				}
@@ -188,13 +188,13 @@ int write_code(int asm_file,enum ops* inp_str,struct jmp_table_entry* jmp_table)
 				{
 					if(i==2)
 					{
-						char a[2];
+						char a[12];
 						sprintf(a,"%d",jmp_table[jmp_table_index].referal);
 						write(asm_file,a,1);
 					}
 					if(i==4)
 					{
-						char a[2];
+						char a[12];
 						sprintf(a,"%d",jmp_table[jmp_table_index].self);
 						write(asm_file,a,1);
 					}
