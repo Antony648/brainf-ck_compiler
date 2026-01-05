@@ -2,6 +2,7 @@
 #include <fcntl.h>
 #include <string.h>
 #include <unistd.h>
+#include <stdlib.h>
 #define NO_INPUT	1
 #define SYNTAX_ERROR	2
 #define WRITE_TO_FILE_ERROR 3
@@ -248,6 +249,9 @@ int main(int argc,char* argv[])
 	}
 	write_code(asm_file,inp_str,jmp_table);
 	close(asm_file);
+	system("nasm -f elf64 out.asm");
+	system("ld out.o -o a.out");
+	system("rm out.asm out.o");
 	return 0;
 
 }
