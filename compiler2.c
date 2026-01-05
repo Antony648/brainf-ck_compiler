@@ -118,7 +118,7 @@ int write_code(int asm_file,enum ops* inp_str,struct jmp_table_entry* jmp_table)
 	char* dot_str[]={"\tmov rax,1\n","\tmov rdi,1\n","\tmov rsi,rbx\n","\tmov rdx,1\n","\tsyscall\n"};
 	char* comma_str[]={"\tmov rax,0\n","\tmov rdi,1\n","\tmov rsi,rbx\n","\tmov rdx,1\n","\tsyscall\n"};
 	char* open_loop[]={"loop_start",":\n","\tcmp byte [rbx],0\n","\tje loop_end","\n"};
-	char* close_loop[]={"\tcmp byte [rbx],0\n","\tloop_start","\n","loop_end",":\n"};
+	char* close_loop[]={"\tcmp byte [rbx],0\n","\tjne loop_start","\n","loop_end",":\n"};
 	char* left_str="\tdec rbx\n";
 	char* right_str="\tinc rbx\n";
 	while(inp_str[op_count]!=END)
